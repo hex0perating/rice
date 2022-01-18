@@ -1,0 +1,67 @@
+add_newline = false
+format = "${custom.sudo}[\\[](#504945) $username$hostname [  ](bold cyan)$directory${custom.giticon}$git_status${custom.gitbranch}[\\]](#504945) $character"
+# (branch in folder) format = "${custom.sudo}[\\[](#504945) $username$hostname ${custom.giticon}$git_status${custom.gitbranch}[  ](bold cyan)$directory[\\]](#504945) $character"
+#  <-- folder icon
+#  <-- git icon
+
+[character]
+success_symbol = "[\\$](bold #8ec07c)"
+error_symbol = "[\\$](bold #fb4934)"
+vicmd_symbol = "[](bold #d3869b)"
+
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+read_only = ""
+truncate_to_repo = false
+style = "bold cyan"
+repo_root_style = "bold blue"
+read_only_style = "bold red"
+fish_style_pwd_dir_length = 1
+truncation_length = 2
+
+[username]
+format = "[$user]($style)[@](bold #504945)"
+show_always = true
+style_root = "bold #fb4934"
+style_user = "bold #8ec07c"
+
+[hostname]
+disabled = false
+format = "[$hostname]($style)"
+ssh_only = false
+style = "bold #83a598"
+
+[git_status]
+format = "([{$all_status$ahead_behind}]($style))"
+modified = "M"
+renamed = "R"
+conflicted = "≠"
+deleted = ""
+staged = "+"
+untracked = "?"
+
+[custom.sudo]
+command = "echo -n '!'"
+when = "sudo -vn &>/dev/null && [ \"$(whoami)\" != \"root\" ]"
+description = "prints a ! if you have sudo creds, otherwise nothing"
+shell = ["bash", "--norc", "--noprofile"]
+style = "bold red"
+format = "[$output ]($style)"
+
+[custom.giticon]
+command = "echo -n ''"
+when = "git rev-parse --is-inside-work-tree &>/dev/null"
+description = "shows git icon if you are in a git repo"
+shell = ["bash", "--norc", "--noprofile"]
+style = "#83a598"
+# (branch in folder) format = "[$output](bold $style)"
+format = "[on $output](bold $style)"
+
+[custom.gitbranch]
+command = "echo -n \"$(git branch --show-current)\""
+when = "git rev-parse --is-inside-work-tree &>/dev/null"
+description = "shows git branch if you are in a git repo"
+shell = ["bash", "--norc", "--noprofile"]
+style = "#83a598"
+# (branch in folder) format = " [$output](bold $style)[ in ]($style)"
+format = " [$output](bold $style) "
