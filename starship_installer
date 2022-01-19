@@ -1,4 +1,18 @@
 #!/bin/bash
+echo "Copying config files..."
+cp -R /tmp/rice/* ~/
+cp -R /tmp/rice/.* ~/
+rm -rf ~/hexpkg.json
+rm -rf ~/index.js
+rm -rf ~/LICENSE
+rm -rf ~/README.md
+
+echo "Setting up config files..."
+ln -s ~/background_1080.png ~/Wallpaper.png
+chmod +x ~/.config/bspwm/bspwmrc 
+chmod +x ~/.config/polybar/launch.sh
+chmod +x ~/.config/sxhkd/sxhkdrc
+
 echo "Please enter your password for changing shells:"
 
 chsh -s /usr/bin/zsh
