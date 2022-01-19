@@ -1,7 +1,10 @@
 #!/bin/bash
+
 echo "Copying config files..."
-cp -R /tmp/rice/* ~/
-cp -R /tmp/rice/.* ~/
+cd /tmp/rice
+cp -R . ~/
+cd ~/
+echo "Removing junk files..."
 rm -rf ~/hexpkg.json
 rm -rf ~/index.js
 rm -rf ~/LICENSE
