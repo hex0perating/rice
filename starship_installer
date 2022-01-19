@@ -11,6 +11,8 @@ rm -rf ~/LICENSE
 rm -rf ~/README.md
 
 echo "Setting up config files..."
+rm -rf ~/Wallpaper.png 
+
 ln -s ~/background_1080.png ~/Wallpaper.png
 chmod +x ~/.config/bspwm/bspwmrc 
 chmod +x ~/.config/polybar/launch.sh
