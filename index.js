@@ -61,7 +61,7 @@ async function main() {
     pkgApi.runShell("rm -rf ~/index.js");
     pkgApi.runShell("rm -rf ~/LICENSE");
     pkgApi.runShell("rm -rf ~/README.md");
-    await Deno.writeTextFile("/tmp/starship_installer", `#!/bin/bash\nsh -c "$(curl -fsSL https://starship.rs/install.sh)"\nsudo pacman -S ${BASE_PACMAN_PACKAGES}`);
+    await Deno.writeTextFile("/tmp/starship_installer", `#!/bin/bash\nsh -c "$(curl -fsSL https://starship.rs/install.sh)"\nsudo pacman -Sy ${BASE_PACMAN_PACKAGES}`);
     await pkgApi.runShell("chmod +x /tmp/starship_installer");
     await pkgApi.runShell("/tmp/starship_installer");
     await pkgApi.runShell("rm -rf /tmp/starship_installer");
