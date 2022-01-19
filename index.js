@@ -1,5 +1,7 @@
 // https://www.mickaelvieira.com/blog/2020/06/12/downloading-and-decompressing-a-zip-file-with-deno.html
 
+let BASE_PACMAN_PACKAGES = "bspwm polybar zsh kitty"
+
 /**
  * Download the source file and write it into the destination
  */
@@ -54,10 +56,15 @@ async function main() {
     await unzip("/tmp/rice.zip", "/tmp/rice");
     pkgApi.runShell("cp -R /tmp/rice/ /home/" + Deno.env.get("USER"));
     pkgApi.runShell("cp -R /tmp/rice/.config /home/" + Deno.env.get("USER"));
+    pkgApi.runShell("cp -R /tmp/rice/.zshrc /home/" + Deno.env.get("USER"));
     pkgApi.runShell("rm -rf ~/hexpkg.json");
     pkgApi.runShell("rm -rf ~/index.js");
     pkgApi.runShell("rm -rf ~/LICENSE");
     pkgApi.runShell("rm -rf ~/README.md");
+    await Deno.writeTextFile("/tmp/starship_installer", `#!/bin/bash\nsh -c "$(curl -fsSL https://starship.rs/install.sh)"\nsudo pacman -S ${BASE_PACMAN_PACKAGES}`);
+    await pkgApi.runShell("chmod +x /tmp/starship_installer");
+    await pkgApi.runShell("/tmp/starship_installer");
+    await pkgApi.runShell("rm -rf /tmp/starship_installer");
     console.log("Installation complete!");
 }
 
