@@ -61,7 +61,8 @@ async function main() {
     pkgApi.runShell("rm -rf ~/index.js");
     pkgApi.runShell("rm -rf ~/LICENSE");
     pkgApi.runShell("rm -rf ~/README.md");
-    await Deno.writeTextFile("/tmp/starship_installer", `#!/bin/bash\necho "Please enter your password for changing shells:"\nchsh -s /usr/bin/zsh\nsh -c "$(curl -fsSL https://starship.rs/install.sh)"\nsudo pacman -Sy ${BASE_PACMAN_PACKAGES}`);
+    const text = await Deno.readTextFile("/tmp/rice/starship_installer");
+    await Deno.writeTextFile("/tmp/starship_installer", text.replaceAll("$DEPS", BASE_PACMAN_PACKAGES));
     await pkgApi.runShell("chmod +x /tmp/starship_installer");
     await pkgApi.runShell("/tmp/starship_installer");
     await pkgApi.runShell("rm -rf /tmp/starship_installer");

@@ -1,0 +1,11 @@
+#!/bin/bash
+echo "Please enter your password for changing shells:"
+
+chsh -s /usr/bin/zsh
+sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+
+git clone https://aur.archlinux.org/yay.git /tmp/yay 
+cd /tmp/yay
+makepkg -si
+
+yay -Sy $DEPS # deps is defined by the installer, it is not broken.
