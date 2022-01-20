@@ -9,6 +9,7 @@ rm -rf ~/hexpkg.json
 rm -rf ~/index.js
 rm -rf ~/LICENSE
 rm -rf ~/README.md
+rm -rf ~/.git
 
 echo "Setting up config files..."
 rm -rf ~/Wallpaper.png 
