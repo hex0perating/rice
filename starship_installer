@@ -39,3 +39,5 @@ echo "" > /tmp/install_nvim_config
 echo ":PlugInstall" >> /tmp/install_nvim_config
 echo :q! >> /tmp/install_nvim_config
 echo :q! >> /tmp/install_nvim_config
+
+vim -s /tmp/install_nvim_config
