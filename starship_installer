@@ -28,10 +28,10 @@ sh -c "$(curl -fsSL https://starship.rs/install.sh)"
 
 git clone https://aur.archlinux.org/yay.git /tmp/yay 
 cd /tmp/yay
-makepkg -si
+makepkg -si --noconfirm
 
 echo "Installing dependencies..."
-yay -Sy $DEPS # deps is defined by the installer, it is not broken.
+yay -Sy --noconfirm $DEPS # deps is defined by the installer, it is not broken.
 
 python -m pip install neovim
 
