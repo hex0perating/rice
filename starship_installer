@@ -11,6 +11,7 @@ rm -rf ~/index.js
 rm -rf ~/LICENSE
 rm -rf ~/README.md
 rm -rf ~/.git
+rm -rf ~/.config/nvim/plugged 
 
 echo "Setting up config files..."
 rm -rf ~/Wallpaper.png 
