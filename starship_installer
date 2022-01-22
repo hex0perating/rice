@@ -4,6 +4,7 @@ echo "Copying config files..."
 cd /tmp/rice
 cp -R . ~/
 cd ~/
+
 echo "Removing junk files..."
 rm -rf ~/hexpkg.json
 rm -rf ~/index.js
@@ -28,4 +29,12 @@ git clone https://aur.archlinux.org/yay.git /tmp/yay
 cd /tmp/yay
 makepkg -si
 
+echo "Installing dependencies..."
 yay -Sy $DEPS # deps is defined by the installer, it is not broken.
+
+python -m pip install neovim
+
+echo "" > /tmp/install_nvim_config
+echo ":PlugInstall" >> /tmp/install_nvim_config
+echo :q! >> /tmp/install_nvim_config
+echo :q! >> /tmp/install_nvim_config
