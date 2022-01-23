@@ -29,6 +29,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'sirver/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'github/copilot.vim'
+Plug 'onsails/lspkind-nvim'
 call plug#end()
 " }}
 " run plugin configurations {{
@@ -83,41 +84,6 @@ set expandtab
 " }}
 
 " keybindings {{
-
-" functions {{
-
-" :helplist {{
-function! ListHelpSubjects()
-    new
-    for f in globpath(&runtimepath, '**/doc/tags', 0, 1)
-        call append('$', readfile(f))
-    endfor
-endfunction
-" }}
-command Helplist call ListHelpSubjects()
-
-" :helplistfp {{
-function LoadHelpTags(filename)
-    let docpath = substitute(a:filename, '\\', '/', 'g')
-    let docpath = substitute(docpath, '/tags$', '/', '')
-
-    let tags = readfile(a:filename)
-
-    return map(tags, { idx, val -> substitute(val, '\t', '\t' . docpath, '') })
-endfunction
-
-function! ListHelpFileNames()
-    new
-    for f in globpath(&runtimepath, '**/doc/tags', 0, 1)
-        call append('$', LoadHelpTags(f))
-    endfor
-endfunction
-
-" }}
-command Helplistfp call ListHelpFileNames()
-
-" }}
-
 let mapleader=" "
 nnoremap <space> <nop>
 
@@ -157,6 +123,110 @@ colorscheme gruvbox-material
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
 
+  -- ADD LSPKIND
+  local lspkind = require('lspkind')
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+      mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      -- { name = 'luasnip' }, -- For luasnip users.
+      { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, {
+      { name = 'buffer', keyword_length = 5 },
+    }),
+    -- lspkind
+    formatting = {
+        format = lspkind.cmp_format {
+            with_text = true,
+            menu = {
+                buffer = "[buf]",
+                nvim_lsp = "[lsp]",
+                path = "[path]",
+                ultisnips = "[ulti]",
+                gh_issues = "[issues]",
+            },
+        },
+    },
+    experimental = {
+        native_menu = false,
+
+        ghost_text = true,
+    }
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local lspconfig = require 'lspconfig'
+
+  lspconfig.sumneko_lua.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Setup your lua path
+        path = runtime_path,
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file('', true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  }
+}
 EOF
 " }}
