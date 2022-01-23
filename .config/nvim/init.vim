@@ -2,10 +2,10 @@ set nocompatible
 
 syntax enable
 
-" plugins {
+" plugins {{
 "
-" install plugins { 
-" autoinstall vim-plug {
+" install plugins {{ 
+" autoinstall vim-plug {{
 let autoload_plug_path = stdpath('config') . '/autoload/plug.vim'
 if !filereadable(autoload_plug_path)
   silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
@@ -13,7 +13,7 @@ if !filereadable(autoload_plug_path)
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 unlet autoload_plug_path
-" }
+" }}
 
 call plug#begin(stdpath('config') . '/plugged')
 
@@ -30,9 +30,9 @@ Plug 'sirver/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'github/copilot.vim'
 call plug#end()
-" }
-" run plugin configurations {
-" airline {
+" }}
+" run plugin configurations {{
+" airline {{
 " enable tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ''
@@ -50,8 +50,8 @@ set showtabline=2
 
 " we don't need to see stuff like --insert-- anymore
 set noshowmode
-" }
-" lspconfig {
+" }}
+" lspconfig {{
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
@@ -61,16 +61,16 @@ autocmd BufWritePre *.js lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
 autocmd BufWritePre *.tsx lua vim.lsp.buf.formatting_sync(nil, 100)
-" }
-" }
+" }}
+" }}
 filetype plugin indent on
-" }
+" }}
 
-" config {
+" config {{
 set number relativenumber
 set foldenable
 set foldmethod=marker
-set foldmarker={\n,}
+set foldmarker={{,}}
 set clipboard=unnamedplus
 
 " tab behavior
@@ -80,9 +80,9 @@ set shiftwidth=4
 set smarttab
 set expandtab
 
-" }
+" }}
 
-" keybindings {
+" keybindings {{
 let mapleader=" "
 nnoremap <space> <nop>
 
@@ -100,9 +100,9 @@ nnoremap <silent> <leader>l :wincmd l<CR>
 map <C-s> :w<CR>
 map <C-w> :q<CR>
 map <C-q> :q!<CR>
-" }
+" }}
 
-" colorscheme {
+" colorscheme {{
 
 if has('termguicolors')
 	set termguicolors
@@ -116,9 +116,12 @@ let g:airline_theme = 'gruvbox_material'
 
 colorscheme gruvbox-material
 
-" }
+" }}
 
-" nvim-cmp {
+" nvim-cmp {{
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
+
+EOF
+" }}
