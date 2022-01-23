@@ -2,6 +2,19 @@ set nocompatible
 
 syntax enable
 
+" plugins {
+"
+" install plugins { 
+" autoinstall vim-plug {
+let autoload_plug_path = stdpath('config') . '/autoload/plug.vim'
+if !filereadable(autoload_plug_path)
+  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
+      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+unlet autoload_plug_path
+" }
+
 call plug#begin(stdpath('config') . '/plugged')
 
 Plug 'sainnhe/gruvbox-material'
@@ -16,20 +29,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'sirver/ultisnips'
 Plug 'quangnguyen30192/cmp-nvim-ultisnips'
 Plug 'github/copilot.vim'
-
-" plugins {
-"
-" install plugins { 
-" autoinstall vim-plug {
-let autoload_plug_path = stdpath('config') . '/autoload/plug.vim'
-if !filereadable(autoload_plug_path)
-  silent execute '!curl -fLo ' . autoload_plug_path . '  --create-dirs 
-      \ "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-unlet autoload_plug_path
-" }
-
 call plug#end()
 " }
 " run plugin configurations {
@@ -71,8 +70,16 @@ filetype plugin indent on
 set number relativenumber
 set foldenable
 set foldmethod=marker
-set foldmarker={,}
+set foldmarker={\n,}
 set clipboard=unnamedplus
+
+" tab behavior
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set smarttab
+set expandtab
+
 " }
 
 " keybindings {
@@ -84,13 +91,15 @@ map <leader>z zo
 map <leader>c zc
 
 " move windows
-nnoremap <leader>h :wincmd h
-nnoremap <leader>j :wincmd j
-nnoremap <leader>k :wincmd k
-nnoremap <leader>l :wincmd l
+nnoremap <silent> <leader>h :wincmd h<CR>
+nnoremap <silent> <leader>j :wincmd j<CR>
+nnoremap <silent> <leader>k :wincmd k<CR>
+nnoremap <silent> <leader>l :wincmd l<CR>
 
-" CTRL+S to ioasjfd Save
+" CTRL+S to Save
 map <C-s> :w<CR>
+map <C-w> :q<CR>
+map <C-q> :q!<CR>
 " }
 
 " colorscheme {
