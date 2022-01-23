@@ -109,7 +109,7 @@ endfunction
 function! ListHelpFileNames()
     new
     for f in globpath(&runtimepath, '**/doc/tags', 0, 1)
-        call append('$', LoadHelpFileNames(f))
+        call append('$', LoadHelpTags(f))
     endfor
 endfunction
 
