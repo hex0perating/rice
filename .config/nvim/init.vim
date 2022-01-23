@@ -83,6 +83,41 @@ set expandtab
 " }}
 
 " keybindings {{
+
+" functions {{
+
+" :helplist {{
+function! ListHelpSubjects()
+    new
+    for f in globpath(&runtimepath, '**/doc/tags', 0, 1)
+        call append('$', readfile(f))
+    endfor
+endfunction
+" }}
+command helplist call ListHelpSubjects()
+
+" :helplistfp {{
+function LoadHelpTags(filename)
+    let docpath = substitute(a:filename, '\\', '/', 'g')
+    let docpath = substitute(docpath, '/tags$', '/', '')
+
+    let tags = readfile(a:filename)
+
+    return map(tags, { idx, val -> substitute(val, '\t', '\t' . docpath, '') })
+endfunction
+
+function! ListHelpFileNames()
+    new
+    for f in globpath(&runtimepath, '**/doc/tags', 0, 1)
+        call append('$', LoadHelpFileNames(f))
+    endfor
+endfunction
+
+" }}
+command helplistfp call ListHelpFileNames()
+
+" }}
+
 let mapleader=" "
 nnoremap <space> <nop>
 
