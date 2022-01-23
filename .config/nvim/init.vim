@@ -94,7 +94,7 @@ function! ListHelpSubjects()
     endfor
 endfunction
 " }}
-command helplist call ListHelpSubjects()
+command Helplist call ListHelpSubjects()
 
 " :helplistfp {{
 function LoadHelpTags(filename)
@@ -114,7 +114,7 @@ function! ListHelpFileNames()
 endfunction
 
 " }}
-command helplistfp call ListHelpFileNames()
+command Helplistfp call ListHelpFileNames()
 
 " }}
 
