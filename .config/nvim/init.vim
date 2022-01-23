@@ -98,8 +98,8 @@ nnoremap <silent> <leader>l :wincmd l<CR>
 
 " CTRL+S to Save
 map <C-s> :w<CR>
-map <C-w> :q<CR>
-map <C-q> :q!<CR>
+map <C-q> :q<CR>
+map <C-Q> :q!<CR>
 " }}
 
 " colorscheme {{
