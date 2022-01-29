@@ -38,8 +38,7 @@ paru -Sy --noconfirm $DEPS # deps is defined by the installer, it is not broken.
 
 python -m pip install neovim
 
-echo "" > /tmp/install_nvim_config
-echo ":PlugInstall" >> /tmp/install_nvim_config
+echo ":PlugInstall" > /tmp/install_nvim_config
 
 vim -s /tmp/install_nvim_config
 echo "Installed!"
