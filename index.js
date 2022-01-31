@@ -1,6 +1,6 @@
 // https://www.mickaelvieira.com/blog/2020/06/12/downloading-and-decompressing-a-zip-file-with-deno.html
 
-let BASE_PACMAN_PACKAGES = "polybar sxhkd bspwm kitty rofi zsh nitrogen neovim neovim nodejs python python-pip";
+let BASE_PACMAN_PACKAGES = "polybar sxhkd bspwm kitty rofi zsh nitrogen neovim neovim nodejs python python-pip xclip scrot";
 
 /**
  * Download the source file and write it into the destination

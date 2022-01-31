@@ -141,3 +141,7 @@ XF86MonBrightnessUp
 # lock screen
 super + x
 	betterlockscreen -l
+
+# screenshot util
+super + shift + {z,s}
+	 exec scrot -{u,s} "/tmp/$(whoami)/screenshots/ss.$(date +%m.%d.%Y | sed 's/^0//g').$(date '+%-I:%M.%P' | awk '{print toupper($0)}').png"; xclip -selection clipboard -t image/png "/tmp/$(whoami)/screenshots/ss.$(date +%m.%d.%Y | sed 's/^0//g').$(date '+%-I:%M.%P' | awk '{print toupper($0)}').png"
