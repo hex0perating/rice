@@ -1,8 +1,21 @@
 add_newline = false
-format = "${custom.sudo}[\\[](#504945) $username$hostname [  ](bold cyan)$directory${custom.giticon}$git_status${custom.gitbranch}[\\]](#504945) $character"
+format = "${custom.sudo}[\\[](#504945) $username$hostname [in   ](bold cyan)$directory${custom.giticon}$git_status${custom.gitbranch}[\\]](#504945) $character"
 # (branch in folder) format = "${custom.sudo}[\\[](#504945) $username$hostname ${custom.giticon}$git_status${custom.gitbranch}[  ](bold cyan)$directory[\\]](#504945) $character"
-#  <-- folder icon
+#  <-- folder icon
 #  <-- git icon
+right_format = "[| ](bold #504945)$cmd_duration${custom.time}"
+continuation_prompt = "▶▶"
+
+[custom.time]
+command = "date '+%-I:%M:%S %P' | awk '{print toupper($0)}'"
+when = "true"
+shell = ["bash", "--noprofile", "--norc"]
+
+[cmd_duration]
+min_time = 50
+show_milliseconds = true
+format = "[$duration]($style)[ < ](bold #504945)"
+style = "bold #83a598"
 
 [character]
 success_symbol = "[\\$](bold #8ec07c)"
@@ -13,8 +26,8 @@ vicmd_symbol = "[](bold #d3869b)"
 format = "[$path]($style)[$read_only]($read_only_style) "
 read_only = ""
 truncate_to_repo = false
-style = "bold cyan"
-repo_root_style = "bold blue"
+style = "bold #8ec07c"
+repo_root_style = "bold #83a598"
 read_only_style = "bold red"
 fish_style_pwd_dir_length = 1
 truncation_length = 2
