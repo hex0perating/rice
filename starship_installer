@@ -26,19 +26,9 @@ echo "Please enter your password for changing shells:"
 chsh -s /usr/bin/zsh
 sh -c "$(curl -fsSL https://starship.rs/install.sh)"
 
-echo "Installing PARU aur helper..."
-# make sure we have base-devel
-sudo pacman --noconfirm -S --needed base-devel
-git clone https://aur.archlinux.org/paru.git /tmp/paru
-cd /tmp/paru
-makepkg -si --noconfirm
-
-echo "Installing dependencies..."
-paru -Sy --noconfirm $DEPS # deps is defined by the installer, it is not broken.
-
 python -m pip install neovim
 
 echo ":PlugInstall" > /tmp/install_nvim_config
 
-vim -s /tmp/install_nvim_config
+nvim -s /tmp/install_nvim_config
 echo "Installed!"

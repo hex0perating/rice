@@ -51,14 +51,20 @@ let BASE_PACMAN_PACKAGES = "polybar sxhkd bspwm kitty rofi zsh nitrogen neovim n
   }
 
 async function main() {
-    pkgApi.runShell("rm -rf /tmp/rice")
-    await download(server + "zip/rice.zip", "/tmp/rice.zip");
-    await unzip("/tmp/rice.zip", "/tmp/rice");
-    const text = await Deno.readTextFile("/tmp/rice/starship_installer");
-    await Deno.writeTextFile("/tmp/starship_installer", text.replaceAll("$DEPS", BASE_PACMAN_PACKAGES));
-    await pkgApi.runShell("chmod +x /tmp/starship_installer");
-    await pkgApi.runShell("/tmp/starship_installer");
-    await pkgApi.runShell("rm -rf /tmp/starship_installer");
+  if (pkgApi.pkgApiVer !== 1) {
+    console.error("You need to update hexpm before installing this package.\nSee 'hexpm help' to see if 'update' exists.");
+    Deno.exit(1);
+  }
+
+  pkgApi.runShell("rm -rf /tmp/rice")
+  await download(server + "zip/rice.zip", "/tmp/rice.zip");
+  await unzip("/tmp/rice.zip", "/tmp/rice");
+  const text = await Deno.readTextFile("/tmp/rice/starship_installer");
+  await Deno.writeTextFile("/tmp/starship_installer", text);
+  await pkgApi.runShell("chmod +x /tmp/starship_installer");
+  await pkgApi.installAUR(`-Sy base-devel paru ${BASE_PACMAN_PACKAGES}`)
+  await pkgApi.runShell("/tmp/starship_installer");
+  await pkgApi.runShell("rm -rf /tmp/starship_installer");
 }
 
 main()
