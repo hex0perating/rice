@@ -6,7 +6,14 @@ alias owo="sudo"
 alias vim="nvim"
 alias emacs="nvim"
 alias vi="nvim"
-alias yay="paru"
+
+yay() {
+  hexpm aur "$@"
+}
+
+paru() {
+  hexpm aur "$@"
+}
 
 xrandr() {
   /usr/bin/xrandr "$@"
