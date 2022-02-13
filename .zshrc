@@ -7,13 +7,8 @@ alias vim="nvim"
 alias emacs="nvim"
 alias vi="nvim"
 
-yay() {
-  hexpm aur "$@"
-}
-
-paru() {
-  hexpm aur "$@"
-}
+alias yay="hexpm aur"
+alias paru="hexpm aur"
 
 xrandr() {
   /usr/bin/xrandr "$@"
